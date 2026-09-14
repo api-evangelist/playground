@@ -1,0 +1,72 @@
+name: Playground API — Free Stateful Mock REST & GraphQL Service
+description: >-
+  A free, zero-configuration, stateful mock REST and GraphQL API sandbox by Nilesh Kumar / Niles Labs. Unlike static
+  mock APIs, it provides stateful per-session virtual mutation overlays where POST/PUT/PATCH/DELETE mutations persist
+  across GET queries within a session, while the global baseline dataset remains read-only. Includes chaos/network
+  simulation, dynamic collections, avatar/thumbnail generators, and simulated JWT auth loops. MIT licensed, no auth or
+  signup required.
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/playground-api-free-stateful-mock-rest-amp-graphql-service/refs/heads/main/apis.yml
+created: '2026-09-14'
+modified: '2026-09-14'
+specificationVersion: '0.21'
+tags:
+  - developer-tools
+  - testing
+  - mock-api
+  - api-sandbox
+  - rest
+  - graphql
+  - e2e-testing
+apis:
+  - name: Playground REST API
+    description: >-
+      Free stateful mock REST API with session-scoped mutation overlays, dynamic collections, media generators, chaos
+      simulation, and simulated JWT auth. Canonical HTTPS base is playground.nileslabs.com/api/v1 (OpenAPI/Postman
+      servers value declares a raw Vercel origin).
+    humanURL: https://playground.nileslabs.com/docs
+    baseURL: https://playground.nileslabs.com/api/v1
+    tags:
+      - developer-tools
+      - testing
+      - mock-api
+      - api-sandbox
+      - rest
+      - graphql
+      - e2e-testing
+    properties:
+      - type: OpenAPI
+        url: https://playground.nileslabs.com/api/v1/downloads/openapi.json
+      - type: PostmanCollection
+        url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+      - type: Documentation
+        url: https://playground.nileslabs.com/docs
+      - type: LLMsTxt
+        url: https://playground.nileslabs.com/llms.txt
+  - name: Playground GraphQL API
+    description: >-
+      GraphQL gateway providing stateful mock query and mutation access to the same dataset, with an interactive
+      explorer.
+    humanURL: https://playground.nileslabs.com/docs/graphql
+    baseURL: https://playground.nileslabs.com/api/v1/graphql
+    tags:
+      - developer-tools
+      - testing
+      - mock-api
+      - api-sandbox
+      - rest
+      - graphql
+      - e2e-testing
+    properties:
+      - type: GraphQL
+        url: https://playground.nileslabs.com/api/v1/graphql
+      - type: Documentation
+        url: https://playground.nileslabs.com/docs/graphql
+maintainers:
+  - FN: Nilesh Kumar
+    url: https://nileslabs.com
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 97
+  at: '2026-09-14T09:54:24.885Z'
