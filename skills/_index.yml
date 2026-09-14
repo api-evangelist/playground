@@ -1,0 +1,20 @@
+generated: '2026-09-14'
+method: generated
+source: >-
+  Authored from the Playground API OpenAPI (openapi/) and /llms-full.txt on
+  2026-09-14. Every step is grounded in a real METHOD + PATH from the spec (the
+  spec declares no operationIds).
+api: Playground REST API
+skills:
+  - name: playground-stateful-crud
+    file: playground-stateful-crud.md
+    summary: Create a record and prove it persists across reads in one session.
+  - name: playground-parallel-e2e
+    file: playground-parallel-e2e.md
+    summary: Isolated parallel E2E tests via per-runner X-Playground-Identity.
+  - name: playground-chaos-simulation
+    file: playground-chaos-simulation.md
+    summary: Drive loading/error/rate-limit UI states with built-in simulation controls.
+note: >-
+  Provider publishes no first-party skills/AGENTS.md; these are generated Agent
+  Skills mirroring the product's marquee flows.

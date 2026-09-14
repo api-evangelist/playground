@@ -1,0 +1,42 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com/llms-full.txt (Session Sandbox, Network
+  Simulation, Code Integration Recipes) and /product.json, fetched 2026-09-14.
+api: Playground REST API
+summary: >-
+  The entire product IS a sandbox — there is no separate test-vs-live split
+  because no data is ever real. Every caller gets a private, disposable mutation
+  overlay over a shared immutable baseline dataset.
+modes:
+  - name: session-overlay
+    default: true
+    detail: >-
+      All writes land in a per-session overlay; the global seed data stays
+      pristine so parallel testers never collide.
+session_identity:
+  browser: credentials:'include' / withCredentials:true (session cookie)
+  non_browser_header: X-Playground-Identity
+  detail: >-
+    Pass a stable X-Playground-Identity value from Node/Playwright/cURL to bind
+    all mutations to one private overlay (ideal for parallel E2E runners).
+test_controls:
+  network_simulation:
+    latency: '?_delay=<1-5000ms> or X-Simulate-Delay header'
+    status: '?_status=<400-599> or X-Simulate-Status header'
+    rate_limit: '?_ratelimit=true or X-Simulate-RateLimit header (429 + Retry-After)'
+  seed_templates:
+    endpoint: POST /api/v1/custom/seed
+    templates: [ecommerce, saas, blog, crm]
+  simulated_auth:
+    detail: Any username/password to /auth/login yields working Bearer JWTs (expires_in 900s).
+session_management:
+  export: GET /api/v1/session/export (a.k.a. /session/snapshot) -> portable JSON
+  import: POST /api/v1/session/import (a.k.a. /session/snapshot) <- restore JSON
+  reset: DELETE /api/v1/session/reset (purge overlay, return to baseline)
+  retention_days: 10
+  max_overlay_records_per_resource: 30
+note: >-
+  No fixture credentials or test cards are invented here — none exist because the
+  provider issues no real keys. All values above are published verbatim by the
+  provider.

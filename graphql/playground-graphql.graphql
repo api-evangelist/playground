@@ -1,0 +1,104 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  users(page: Int, limit: Int, q: String, _sort: String, _order: String): [User]
+  user(id: ID!): User
+  me: User
+  posts(page: Int, limit: Int, user_id: ID, q: String, _sort: String, _order: String): [Post]
+  post(id: ID!): Post
+  comments(page: Int, limit: Int, post_id: ID, q: String, _sort: String, _order: String): [Comment]
+  comment(id: ID!): Comment
+  todos(page: Int, limit: Int, user_id: ID, completed: Boolean, q: String, _sort: String, _order: String): [Todo]
+  todo(id: ID!): Todo
+}
+
+type User {
+  id: ID
+  name: String
+  username: String
+  email: String
+  avatar: String
+  phone: String
+  website: String
+  address: Address
+  company: Company
+  posts: [Post]
+  todos: [Todo]
+}
+
+type Address {
+  street: String
+  suite: String
+  city: String
+  zipcode: String
+  geo: Geo
+}
+
+type Geo {
+  lat: String
+  lng: String
+}
+
+type Company {
+  name: String
+  catchPhrase: String
+  bs: String
+}
+
+type Post {
+  id: ID
+  user_id: ID
+  userId: ID
+  title: String
+  body: String
+  thumbnail: String
+  user: User
+  comments: [Comment]
+}
+
+type Comment {
+  id: ID
+  post_id: ID
+  postId: ID
+  name: String
+  email: String
+  body: String
+  post: Post
+}
+
+type Todo {
+  id: ID
+  user_id: ID
+  userId: ID
+  title: String
+  completed: Boolean
+  user: User
+}
+
+type Mutation {
+  login(username: String, email: String, password: String): AuthPayload
+  register(name: String!, username: String!, email: String!, password: String): AuthPayload
+  createUser(name: String!, username: String, email: String, phone: String, website: String): User
+  updateUser(id: ID!, name: String, username: String, email: String, phone: String, website: String): User
+  deleteUser(id: ID!): Boolean
+  createPost(user_id: ID!, title: String!, body: String): Post
+  updatePost(id: ID!, title: String, body: String): Post
+  deletePost(id: ID!): Boolean
+  createComment(post_id: ID!, name: String!, email: String!, body: String!): Comment
+  updateComment(id: ID!, name: String, email: String, body: String): Comment
+  deleteComment(id: ID!): Boolean
+  createTodo(user_id: ID!, title: String!, completed: Boolean): Todo
+  updateTodo(id: ID!, title: String, completed: Boolean): Todo
+  deleteTodo(id: ID!): Boolean
+}
+
+type AuthPayload {
+  access_token: String
+  refresh_token: String
+  token_type: String
+  expires_in: Int
+  user: User
+}

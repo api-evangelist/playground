@@ -1,0 +1,51 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  Derived from the published OpenAPI (openapi/playground-openapi.json), the live
+  GraphQL schema (graphql/), and the documented conventions in /llms-full.txt.
+  No compliance/certification claims are made by the provider (free mock tool).
+api: Playground REST API
+conformance:
+  - id: rest
+    conforms: true
+    evidence: >-
+      Resource-oriented HTTP with GET/POST/PUT/PATCH/DELETE across 21 paths in
+      openapi/playground-openapi.json; correct 200/201/204 semantics documented.
+  - id: graphql
+    conforms: true
+    evidence: >-
+      Live introspectable GraphQL endpoint at /api/v1/graphql with Query +
+      Mutation root types (graphql/playground-graphql.graphql).
+  - id: openapi
+    conforms: true
+    evidence: OpenAPI 3.0.3 document served at /api/v1/downloads/openapi.json.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Consistent page/limit + {data, pagination{page,limit,total,totalPages,
+      hasNextPage,hasPrevPage}} envelope on every list endpoint.
+  - id: jwt
+    conforms: true
+    evidence: >-
+      Bearer JWT (HS256) issued by /auth/login|register|refresh with
+      token_type Bearer and expires_in — a SIMULATED implementation for testing,
+      not a security control.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Error envelope is a custom {error, message} JSON object, not
+      application/problem+json. See errors/playground-problem-types.yml.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No OAuth2/OIDC; /.well-known/openid-configuration and
+      /.well-known/oauth-authorization-server both 404.
+  - id: idempotency
+    conforms: false
+    evidence: No Idempotency-Key mechanism. See conventions/playground-conventions.yml.
+domain_standard:
+  applicable: false
+  note: >-
+    Developer-tooling / mock-API category has no market-specific interchange
+    standard to declare (no SCIM/OData/OpenRTB/FHIR/etc. applies). Reward-only
+    dimension left empty rather than invented.

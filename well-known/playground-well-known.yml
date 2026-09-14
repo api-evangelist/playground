@@ -1,0 +1,67 @@
+generated: '2026-09-14'
+method: probed
+source: >-
+  Probed /.well-known/* on the primary docs/API host and the registrable domain
+  on 2026-09-14. Every path returned 404 (SPA catch-all HTML shell on
+  playground.nileslabs.com, static 404 page on nileslabs.com) — no served
+  discovery document. Recorded as an honest absence; no WellKnown/SecurityTxt
+  pointer emitted because no path returned a real document.
+hosts:
+  - host: playground.nileslabs.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: nileslabs.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+note: >-
+  Playground API publishes machine-readable discovery through non-.well-known
+  paths instead: /llms.txt, /llms-full.txt and /product.json all return 200 with
+  real content (indexed under llms/ and referenced in apis.yml). No OAuth/OIDC
+  metadata exists because authentication is a simulated JWT loop, not a real
+  identity provider.

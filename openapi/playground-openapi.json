@@ -1,0 +1,1853 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Playground API",
+    "version": "1.0.0",
+    "description": "Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation."
+  },
+  "servers": [
+    {
+      "url": "http://playground-api-backend.vercel.app",
+      "description": "Default Server"
+    }
+  ],
+  "paths": {
+    "/api/v1/users": {
+      "get": {
+        "summary": "Retrieve a paginated list of users. Results merge shared global user records with session sandbox overlays (newly created users appear at the top).",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search query term across name, username, email, etc.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (1-indexed, default 1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of records per page (default 10, max 200).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Field name to sort results by (e.g. name, id, username, email).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "_order",
+            "in": "query",
+            "required": false,
+            "description": "Sort direction: asc (default) or desc.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "local-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "name": "Leanne Graham",
+                      "username": "bret",
+                      "email": "sincere@april.biz",
+                      "_sandbox": "created"
+                    },
+                    {
+                      "id": 1,
+                      "name": "Leanne Graham",
+                      "username": "bret",
+                      "email": "sincere@april.biz",
+                      "phone": "+1-770-555-0123",
+                      "website": "hildegard.org",
+                      "address": {
+                        "street": "Kulas Light",
+                        "city": "Gwenborough",
+                        "zipcode": "92998-3874"
+                      },
+                      "company": {
+                        "name": "Romaguera-Crona",
+                        "catchPhrase": "Multi-layered client-server neural-net"
+                      }
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "limit": 10,
+                    "total": 26,
+                    "totalPages": 3,
+                    "hasNextPage": true,
+                    "hasPrevPage": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new session sandbox user record. Returns a local-<uuid> formatted ID with _sandbox: 'created'. Each session identity is capped at 30 created records.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "required": false,
+            "description": "Full name of the user.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "username",
+            "in": "body",
+            "required": false,
+            "description": "Username.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "required": false,
+            "description": "Email address.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "body",
+            "required": false,
+            "description": "Phone number.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "website",
+            "in": "body",
+            "required": false,
+            "description": "Website URL.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "body",
+            "required": false,
+            "description": "JSON object containing street, city, zipcode.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company",
+            "in": "body",
+            "required": false,
+            "description": "JSON object containing company name and catchPhrase.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "local-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "name": "Leanne Graham",
+                  "username": "bret",
+                  "email": "sincere@april.biz",
+                  "_sandbox": "created"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Leanne Graham",
+                "username": "bret",
+                "email": "sincere@april.biz",
+                "phone": "+1-770-555-0123",
+                "website": "hildegard.org",
+                "address": {
+                  "street": "Kulas Light",
+                  "city": "Gwenborough",
+                  "zipcode": "92998-3874"
+                },
+                "company": {
+                  "name": "Romaguera-Crona",
+                  "catchPhrase": "Multi-layered client-server neural-net"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "summary": "Retrieve a single user by ID. Supports plain integer IDs for global records (e.g. 1) and string IDs formatted as local-<uuid> for session sandbox records.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID (e.g. 1 for global user or local-<uuid> for sandbox user).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Leanne Graham",
+                  "username": "bret",
+                  "email": "sincere@april.biz",
+                  "phone": "+1-770-555-0123",
+                  "website": "hildegard.org",
+                  "address": {
+                    "street": "Kulas Light",
+                    "city": "Gwenborough",
+                    "zipcode": "92998-3874"
+                  },
+                  "company": {
+                    "name": "Romaguera-Crona",
+                    "catchPhrase": "Multi-layered client-server neural-net"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Replace an existing user record in the session overlay. Global records remain untouched for other visitors and preserve original list position.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID to update (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Leanne Graham (Updated)",
+                  "username": "bret",
+                  "email": "sincere@april.biz",
+                  "phone": "+1-770-555-0123",
+                  "website": "https://updated-user.dev",
+                  "address": {
+                    "street": "Kulas Light",
+                    "city": "Gwenborough",
+                    "zipcode": "92998-3874"
+                  },
+                  "company": {
+                    "name": "Romaguera-Crona",
+                    "catchPhrase": "Multi-layered client-server neural-net"
+                  },
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Leanne Graham (Updated)",
+                "username": "bret",
+                "email": "sincere@april.biz",
+                "website": "https://updated-user.dev"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update specific fields of a user record in the session overlay.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID to patch (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Leanne Graham (Updated)",
+                  "username": "bret",
+                  "email": "sincere@april.biz",
+                  "phone": "+1-770-555-0123",
+                  "website": "https://updated-user.dev",
+                  "address": {
+                    "street": "Kulas Light",
+                    "city": "Gwenborough",
+                    "zipcode": "92998-3874"
+                  },
+                  "company": {
+                    "name": "Romaguera-Crona",
+                    "catchPhrase": "Multi-layered client-server neural-net"
+                  },
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Leanne Graham (Updated)",
+                "website": "https://updated-user.dev"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a user record from the requesting session view. The underlying global record is unaffected for other visitors.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID to delete (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Resource 'users' with id '1' deleted successfully from sandbox overlay",
+                  "id": 1,
+                  "resource": "users"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts": {
+      "get": {
+        "summary": "Retrieve a paginated list of posts. Results merge shared global posts with session sandbox overlays (newly created posts appear at the top).",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search query term across title, body, etc.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter posts by author user ID (e.g. user_id=1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (1-indexed, default 1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of records per page (default 10, max 200).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Field name to sort results by (e.g. title, id, user_id).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "_order",
+            "in": "query",
+            "required": false,
+            "description": "Sort direction: asc (default) or desc.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "local-b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                      "user_id": 1,
+                      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                      "_sandbox": "created"
+                    },
+                    {
+                      "id": 1,
+                      "user_id": 1,
+                      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                      "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "limit": 10,
+                    "total": 101,
+                    "totalPages": 11,
+                    "hasNextPage": true,
+                    "hasPrevPage": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new session sandbox post record. Returns a local-<uuid> formatted ID with _sandbox: 'created'. Each session identity is capped at 30 created records.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "required": false,
+            "description": "Author user ID.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "title",
+            "in": "body",
+            "required": false,
+            "description": "Post title.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "Post body text content.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "local-b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                  "user_id": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto",
+                  "_sandbox": "created"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "user_id": 1,
+                "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/{id}": {
+      "get": {
+        "summary": "Retrieve a single post by ID. Supports plain integer IDs for global records (e.g. 1) and string IDs formatted as local-<uuid> for session sandbox records.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Post ID (e.g. 1 for global post or local-<uuid> for sandbox post).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Replace an existing post record in the session overlay. Global records remain untouched for other visitors and preserve original list position.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Post ID to update (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit (Updated)",
+                  "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto",
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "user_id": 1,
+                "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit (Updated)",
+                "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update specific fields of a post record in the session overlay.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Post ID to patch (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit (Updated)",
+                  "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto",
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit (Updated)"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a post record from the requesting session view. The underlying global record is unaffected for other visitors.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Post ID to delete (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Resource 'posts' with id '1' deleted successfully from sandbox overlay",
+                  "id": 1,
+                  "resource": "posts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comments": {
+      "get": {
+        "summary": "Retrieve a paginated list of comments. Results merge shared global comments with session sandbox overlays (newly created comments appear at the top).",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search query term across name, email, body, etc.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "post_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter comments by parent post ID (e.g. post_id=1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (1-indexed, default 1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of records per page (default 10, max 200).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Field name to sort results by (e.g. name, email, id).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "_order",
+            "in": "query",
+            "required": false,
+            "description": "Sort direction: asc (default) or desc.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "local-c3d4e5f6-7890-abcd-ef12-345678901234",
+                      "post_id": 1,
+                      "name": "id labore ex et quam laborum",
+                      "_sandbox": "created"
+                    },
+                    {
+                      "id": 1,
+                      "post_id": 1,
+                      "name": "id labore ex et quam laborum",
+                      "email": "Eliseo@gardner.biz",
+                      "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus"
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "limit": 10,
+                    "total": 301,
+                    "totalPages": 31,
+                    "hasNextPage": true,
+                    "hasPrevPage": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new session sandbox comment record. Returns a local-<uuid> formatted ID with _sandbox: 'created'. Each session identity is capped at 30 created records.",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "body",
+            "required": false,
+            "description": "Target post ID.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "required": false,
+            "description": "Comment title or reviewer name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "required": false,
+            "description": "Commenter email address.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "Comment text content.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "local-c3d4e5f6-7890-abcd-ef12-345678901234",
+                  "post_id": 1,
+                  "name": "id labore ex et quam laborum",
+                  "email": "Eliseo@gardner.biz",
+                  "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus",
+                  "_sandbox": "created"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "post_id": 1,
+                "name": "id labore ex et quam laborum",
+                "email": "Eliseo@gardner.biz",
+                "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comments/{id}": {
+      "get": {
+        "summary": "Retrieve a single comment by ID. Supports plain integer IDs for global records (e.g. 1) and string IDs formatted as local-<uuid> for session sandbox records.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID (e.g. 1 for global comment or local-<uuid> for sandbox comment).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "post_id": 1,
+                  "name": "id labore ex et quam laborum",
+                  "email": "Eliseo@gardner.biz",
+                  "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Replace an existing comment record in the session overlay. Global records remain untouched for other visitors and preserve original list position.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID to update (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "post_id": 1,
+                  "name": "id labore ex et quam laborum (Updated)",
+                  "email": "Eliseo@gardner.biz",
+                  "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus",
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "post_id": 1,
+                "name": "id labore ex et quam laborum (Updated)",
+                "email": "Eliseo@gardner.biz",
+                "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update specific fields of a comment record in the session overlay.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID to patch (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "post_id": 1,
+                  "name": "id labore ex et quam laborum (Updated)",
+                  "email": "Eliseo@gardner.biz",
+                  "body": "laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus",
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "id labore ex et quam laborum (Updated)"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a comment record from the requesting session view. The underlying global record is unaffected for other visitors.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID to delete (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Resource 'comments' with id '1' deleted successfully from sandbox overlay",
+                  "id": 1,
+                  "resource": "comments"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/todos": {
+      "get": {
+        "summary": "Retrieve a paginated list of todos. Results merge shared global todos with session sandbox overlays (newly created todos appear at the top).",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search query term across title, etc.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter todos by owner user ID (e.g. user_id=1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "completed",
+            "in": "query",
+            "required": false,
+            "description": "Filter todos by completion status (true or false).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (1-indexed, default 1).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of records per page (default 10, max 200).",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Field name to sort results by (e.g. title, id, completed).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "_order",
+            "in": "query",
+            "required": false,
+            "description": "Sort direction: asc (default) or desc.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "local-d4e5f6a7-8901-bcde-f123-456789012345",
+                      "user_id": 1,
+                      "title": "delectus aut autem",
+                      "completed": true,
+                      "_sandbox": "created"
+                    },
+                    {
+                      "id": 1,
+                      "user_id": 1,
+                      "title": "delectus aut autem",
+                      "completed": false
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "limit": 10,
+                    "total": 126,
+                    "totalPages": 13,
+                    "hasNextPage": true,
+                    "hasPrevPage": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new session sandbox todo record. Returns a local-<uuid> formatted ID with _sandbox: 'created'. Each session identity is capped at 30 created records.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "required": false,
+            "description": "Owner user ID.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "title",
+            "in": "body",
+            "required": false,
+            "description": "Todo task title.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completed",
+            "in": "body",
+            "required": false,
+            "description": "Completion status (true / false).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "local-d4e5f6a7-8901-bcde-f123-456789012345",
+                  "user_id": 1,
+                  "title": "delectus aut autem",
+                  "completed": false,
+                  "_sandbox": "created"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "user_id": 1,
+                "title": "delectus aut autem",
+                "completed": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/todos/{id}": {
+      "get": {
+        "summary": "Retrieve a single todo item by ID. Supports plain integer IDs for global records (e.g. 1) and string IDs formatted as local-<uuid> for session sandbox records.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Todo ID (e.g. 1 for global todo or local-<uuid> for sandbox todo).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "delectus aut autem",
+                  "completed": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Replace an existing todo record in the session overlay. Global records remain untouched for other visitors and preserve original list position.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Todo ID to update (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "delectus aut autem (Updated)",
+                  "completed": true,
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "user_id": 1,
+                "title": "delectus aut autem (Updated)",
+                "completed": true
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update specific fields of a todo record in the session overlay.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Todo ID to patch (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": 1,
+                  "title": "delectus aut autem",
+                  "completed": true,
+                  "_sandbox": "updated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "completed": true
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a todo record from the requesting session view. The underlying global record is unaffected for other visitors.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Todo ID to delete (e.g. 1 or local-<uuid>).",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Resource 'todos' with id '1' deleted successfully from sandbox overlay",
+                  "id": 1,
+                  "resource": "todos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "summary": "Authenticate user with username/email & password to receive signed JWT access and refresh tokens.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "username": "Bret",
+                "password": "password123"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "summary": "Register a new session user and immediately receive signed JWT tokens.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Alice Smith",
+                "username": "alice",
+                "email": "alice@example.com",
+                "password": "password123"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "summary": "Exchange a valid refresh token for a fresh 15-minute JWT access token.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "summary": "Retrieve current authenticated user profile using Authorization: Bearer <access_token>.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update current authenticated user profile in the session sandbox using Authorization: Bearer <access_token>.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Bret - Updated Profile",
+                "email": "bret.new@example.com"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/avatars/{seed}.svg": {
+      "get": {
+        "parameters": [
+          {
+            "name": "seed",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rounded",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" width=\"128\" height=\"128\">\n  <defs>\n    <linearGradient id=\"grad-12345\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#059669\" />\n      <stop offset=\"100%\" stop-color=\"#0d9488\" />\n    </linearGradient>\n  </defs>\n  <rect width=\"128\" height=\"128\" rx=\"64\" fill=\"url(#grad-12345)\" />\n  <text x=\"50%\" y=\"54%\" font-family=\"Inter, sans-serif\" font-size=\"54\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\" dominant-baseline=\"middle\">BR</text>\n</svg>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/thumbnails/{seed}.svg": {
+      "get": {
+        "parameters": [
+          {
+            "name": "seed",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "width",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "height",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 400\" width=\"600\" height=\"400\">\n  <defs>\n    <linearGradient id=\"thumb-grad-54321\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#4f46e5\" />\n      <stop offset=\"100%\" stop-color=\"#7c3aed\" />\n    </linearGradient>\n  </defs>\n  <rect width=\"600\" height=\"400\" fill=\"url(#thumb-grad-54321)\" />\n  <text x=\"50%\" y=\"46%\" font-family=\"Inter, sans-serif\" font-size=\"33\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\" dominant-baseline=\"middle\">Post #1</text>\n</svg>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/session/export": {
+      "get": {
+        "parameters": [
+          {
+            "name": "resource",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "version": "1.0",
+                  "exportedAt": "2026-08-02T23:00:00.000Z",
+                  "identityId": "550e8400-e29b-41d4-a716-446655440000",
+                  "targetResource": "all",
+                  "stats": {
+                    "totalRecords": 2,
+                    "creates": 1,
+                    "updates": 1,
+                    "deletes": 0
+                  },
+                  "records": [
+                    {
+                      "resource": "users",
+                      "op": "create",
+                      "targetId": null,
+                      "data": {
+                        "name": "Custom User"
+                      },
+                      "createdAt": "2026-08-02T22:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/session/import": {
+      "post": {
+        "parameters": [
+          {
+            "name": "strategy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resource",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Session sandbox snapshot imported successfully.",
+                  "importedRecords": 1,
+                  "strategy": "replace",
+                  "affectedResources": [
+                    "users"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "version": "1.0",
+                "records": [
+                  {
+                    "resource": "users",
+                    "op": "create",
+                    "data": {
+                      "name": "Restored User",
+                      "email": "restored@sandbox.dev"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/session/reset": {
+      "delete": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Session sandbox overlay purged successfully.",
+                  "purgedRecords": 3
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/custom": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "totalCollections": 2,
+                  "collections": [
+                    {
+                      "name": "products",
+                      "endpoint": "/custom/products",
+                      "count": 3,
+                      "lastUpdated": "2026-08-02T23:30:00.000Z"
+                    },
+                    {
+                      "name": "orders",
+                      "endpoint": "/custom/orders",
+                      "count": 2,
+                      "lastUpdated": "2026-08-02T23:30:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/custom/seed": {
+      "post": {
+        "parameters": [
+          {
+            "name": "template",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Seeded 5 records across custom collections: products, orders.",
+                  "template": "ecommerce",
+                  "collections": [
+                    "products",
+                    "orders"
+                  ],
+                  "totalSeeded": 5
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "template": "ecommerce"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/custom/{collection}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "collection",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "_sort",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "local-a1b2c3d4",
+                      "name": "MacBook Pro M3",
+                      "price": 2499,
+                      "category": "Laptops",
+                      "createdAt": "2026-08-02T23:30:00.000Z",
+                      "_sandbox": "created"
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "limit": 10,
+                    "total": 1,
+                    "totalPages": 1,
+                    "hasNextPage": false,
+                    "hasPrevPage": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "name": "collection",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "local-f9e8d7c6-5432-10ab",
+                  "name": "Custom Product Item",
+                  "price": 99.99,
+                  "inStock": true,
+                  "createdAt": "2026-08-02T23:30:00.000Z",
+                  "updatedAt": "2026-08-02T23:30:00.000Z",
+                  "_sandbox": "created"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Custom Product Item",
+                "price": 99.99,
+                "inStock": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/custom/{collection}/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "name": "collection",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Record 'local-f9e8d7c6' removed from custom collection 'products'"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

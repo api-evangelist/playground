@@ -1,0 +1,66 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  Derived from the live GraphQL schema (graphql/playground-graphql.graphql,
+  introspected 2026-09-14) and the REST resource reference in
+  https://playground.nileslabs.com/llms-full.txt. Object shapes and relations
+  are authoritative from the GraphQL type system.
+api: Playground REST API
+id_scheme:
+  baseline: plain integer (e.g. 1) for pristine global seed records
+  sandbox: local-<uuid> for session-created records (carry _sandbox marker)
+entities:
+  - name: User
+    path: /api/v1/users
+    count: 25
+    fields: [id, name, username, email, phone, website, address, company]
+    nested:
+      address: { fields: [street, suite, city, zipcode, geo] }
+      geo: { fields: [lat, lng] }
+      company: { fields: [name, catchPhrase, bs] }
+    relationships:
+      - has_many: Post
+        via: user_id
+        endpoint: /api/v1/users/:id/posts
+      - has_many: Todo
+        via: user_id
+        endpoint: /api/v1/users/:id/todos
+  - name: Post
+    path: /api/v1/posts
+    count: 100
+    fields: [id, user_id, title, body]
+    relationships:
+      - belongs_to: User
+        via: user_id
+      - has_many: Comment
+        via: post_id
+        endpoint: /api/v1/posts/:id/comments
+  - name: Comment
+    path: /api/v1/comments
+    count: 300
+    fields: [id, post_id, name, email, body]
+    relationships:
+      - belongs_to: Post
+        via: post_id
+  - name: Todo
+    path: /api/v1/todos
+    count: 125
+    fields: [id, user_id, title, completed]
+    relationships:
+      - belongs_to: User
+        via: user_id
+  - name: AuthPayload
+    fields: [access_token, refresh_token, token_type, expires_in, user]
+    note: Returned by login/register; token_type Bearer, expires_in 900s.
+  - name: CustomRecord
+    path: /api/v1/custom/:collection
+    dynamic: true
+    fields: [id, createdAt, updatedAt, '...arbitrary user fields']
+    note: >-
+      Schema-less. Seedable via POST /custom/seed with templates ecommerce,
+      saas, blog, crm.
+notes: >-
+  Baseline dataset mirrors the classic JSONPlaceholder shape (users/posts/
+  comments/todos) but adds true relational sub-resource routes, dynamic custom
+  collections, and session mutation overlays. Media endpoints (avatars,
+  thumbnails) are generators, not stored entities.

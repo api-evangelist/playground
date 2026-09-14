@@ -1,0 +1,52 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  Searched npm (registry.npmjs.org), PyPI, and the provider's downloads surface
+  (https://playground.nileslabs.com/api/v1/downloads/) plus GitHub
+  nileslabs/playground_api on 2026-09-14.
+api: Playground REST API
+registry_findings:
+  npm: >-
+    No first-party client library. "@nileslabs/playground-api" returns 404;
+    the unscoped "playground-api" on npm is an unrelated project (The Tetcoin
+    Project), NOT this provider.
+  other: No PyPI/Maven/NuGet/crates/RubyGems first-party client found.
+packages:
+  - name: playground-api.d.ts
+    kind: typescript-type-definitions
+    official: true
+    registry: cdn
+    url: https://playground.nileslabs.com/api/v1/downloads/playground-api.d.ts
+    version: null
+    published: null
+    note: >-
+      First-party TypeScript type definitions (interfaces for User/Post/Comment/
+      Todo/AuthPayload etc.), served unpinned from the downloads path — the URL
+      floats to latest, so a consumer cannot tell which version they receive.
+      Types only, not a runnable client/SDK.
+  - name: Playground API Collection (Postman)
+    kind: api-client-collection
+    official: true
+    registry: cdn
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+    version: null
+    published: null
+    note: Postman Collection v2.1 for import. Unpinned download.
+  - name: Playground API (Bruno)
+    kind: api-client-collection
+    official: true
+    registry: cdn
+    url: https://playground.nileslabs.com/api/v1/downloads/bruno.json
+    version: null
+    published: null
+  - name: Playground API (Insomnia)
+    kind: api-client-collection
+    official: true
+    registry: cdn
+    url: https://playground.nileslabs.com/api/v1/downloads/insomnia.json
+    version: null
+    published: null
+note: >-
+  No packaged SDK exists on any registry, so no SDKs pointer is emitted. What the
+  provider distributes are import artifacts (Postman/Bruno/Insomnia collections)
+  and standalone TypeScript type definitions, all CDN-hosted and unpinned.

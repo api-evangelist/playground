@@ -1,0 +1,126 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com/llms-full.txt and /llms.txt (fetched
+  2026-09-14), cross-checked against the published OpenAPI (openapi/) and live
+  response envelopes. Cross-links: errors/playground-problem-types.yml,
+  lifecycle/playground-lifecycle.yml, authentication/playground-authentication.yml,
+  rate-limits/playground-rate-limits.yml.
+api: Playground REST API
+auth_style:
+  scheme: bearer-jwt-simulated
+  required: false
+  detail: >-
+    Public API. Optional simulated Bearer JWT only for /auth/me. Caller
+    isolation is by session, not auth — X-Playground-Identity header
+    (non-browser) or credentials:'include' cookie (browser).
+versioning:
+  style: uri-path
+  current: v1
+  base: https://playground.nileslabs.com/api/v1
+  note: All resources are scoped under /api/v1. No version negotiation headers.
+pagination:
+  style: page-number
+  params:
+    page: 1-indexed page number (alias _page)
+    limit: records per page, default 10, max 200 (alias _limit)
+  response_envelope:
+    list_wrapper: data
+    meta_object: pagination
+    meta_fields:
+      - page
+      - limit
+      - total
+      - totalPages
+      - hasNextPage
+      - hasPrevPage
+  note: >-
+    List endpoints return {data:[...], pagination:{...}}. Single-record
+    endpoints return the bare object. Deletes return 204 No Content (custom
+    collection deletes return a {message} confirmation).
+sorting:
+  params:
+    _sort: field name to sort by (e.g. title, name, id, completed, created_at)
+    _order: asc | desc
+filtering:
+  full_text_search:
+    param: q
+    note: case-insensitive across the resource's text fields
+  relational:
+    - user_id (posts, todos)
+    - post_id (comments)
+    - completed (todos, boolean)
+field_metadata:
+  sandbox_marker: _sandbox
+  note: >-
+    Records created or mutated in the session overlay carry a _sandbox field
+    ("created" | "updated"). Global baseline records omit it. Sandbox record IDs
+    are formatted local-<uuid>; baseline IDs are plain integers.
+request_id_tracing:
+  supported: false
+  note: No request-id / correlation-id header documented.
+rate_limit_signaling:
+  real_limits: false
+  note: >-
+    No enforced limits. A 429 with a Retry-After header can be triggered on
+    demand for testing via ?_ratelimit=true or X-Simulate-RateLimit: true. See
+    rate-limits/playground-rate-limits.yml.
+network_simulation:
+  description: >-
+    First-class chaos/latency testing controls, unique to this provider. Set via
+    query param or header on any request.
+  latency:
+    query: _delay=<ms>
+    header: 'X-Simulate-Delay: <ms>'
+    range: 1-5000 ms
+  status:
+    query: _status=<code>
+    header: 'X-Simulate-Status: <code>'
+    range: 400-599
+  rate_limit:
+    query: _ratelimit=true
+    header: 'X-Simulate-RateLimit: true'
+    effect: 429 Too Many Requests with Retry-After
+error_envelope:
+  shape: '{ error: <string>, message: <string> }'
+  format: custom-json
+  rfc9457: false
+  note: >-
+    Observed 404 body: {"error":"Cannot find <path> on this server.",
+    "message":"..."}. Not application/problem+json. See
+    errors/playground-problem-types.yml.
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  note: >-
+    No Idempotency-Key header and no replay-protection is documented on any
+    mutating operation. Retried POSTs create additional overlay records (subject
+    to the 30-records-per-resource cap). PUT/PATCH/DELETE are naturally
+    idempotent by HTTP semantics but there is no explicit idempotency key
+    facility.
+reversibility:
+  grade: verified
+  applies: true
+  detail: >-
+    Every write is a session-scoped overlay laid over an immutable global
+    baseline, so no mutation is ever destructive to shared data. A caller can
+    fully undo all of their mutations.
+  reversal_operations:
+    - operation: DELETE /api/v1/session/reset
+      reverses: all creates, updates and deletes in the session overlay
+      restores_to: clean global baseline
+      window: >-
+        available at any time; overlays also auto-expire after 10 days of
+        inactivity
+      source: https://playground.nileslabs.com/llms-full.txt (Session Sandbox Controls)
+    - operation: POST /api/v1/session/import (a.k.a. /session/snapshot)
+      reverses: restores a previously exported overlay state from JSON
+      restores_to: the snapshot's captured state
+      window: any time before the 10-day overlay expiry
+      source: https://playground.nileslabs.com/llms-full.txt (Session Sandbox Controls)
+  note: >-
+    Graded verified: a documented reversal operation (session reset) AND a
+    stated window (anytime / 10-day retention) both exist. There is no per-record
+    undo of a single delete, but reset restores the record because the baseline
+    is never mutated.

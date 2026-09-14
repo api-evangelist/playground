@@ -6,7 +6,7 @@ description: >-
   simulation, dynamic collections, avatar/thumbnail generators, and simulated JWT auth loops. MIT licensed, no auth or
   signup required.
 url: >-
-  https://raw.githubusercontent.com/api-evangelist/playground-api-free-stateful-mock-rest-amp-graphql-service/refs/heads/main/apis.yml
+  https://raw.githubusercontent.com/api-evangelist/playground/refs/heads/main/apis.yml
 created: '2026-09-14'
 modified: '2026-09-14'
 specificationVersion: '0.21'
@@ -65,8 +65,52 @@ apis:
 maintainers:
   - FN: Nilesh Kumar
     url: https://nileslabs.com
-generated:
+x-generated:
   by: apis.io/add
   model: claude-opus-4-8
   confidence: 97
   at: '2026-09-14T09:54:24.885Z'
+common:
+- type: Website
+  url: https://playground.nileslabs.com
+- type: GettingStarted
+  url: https://playground.nileslabs.com/docs/quickstart
+- type: SourceCode
+  url: https://github.com/nileslabs/playground_api
+- type: GitHubOrganization
+  url: https://github.com/nileslabs
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/playground-openapi-overlay.yaml
+- type: ToolCrosswalk
+  url: mcp/playground-tool-crosswalk.yml
+- type: MCPServer
+  url: mcp/playground-mcp.yml
+- type: Packages
+  url: packages/playground-packages.yml
+- type: Sandbox
+  url: sandbox/playground-sandbox.yml
+- type: Conformance
+  url: conformance/playground-conformance.yml
+- type: Plans
+  url: plans/playground-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/playground-rate-limits.yml
+- type: DataModel
+  url: data-model/playground-data-model.yml
+- type: Lifecycle
+  url: lifecycle/playground-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/playground-problem-types.yml
+- type: Conventions
+  url: conventions/playground-conventions.yml
+- type: Authentication
+  url: authentication/playground-authentication.yml
+- type: DomainSecurity
+  url: security/playground-domain-security.yml
+x-enrichment:
+  date: '2026-09-14'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v3

@@ -1,0 +1,31 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com (product positioning), /product.json and
+  /llms-full.txt, fetched 2026-09-14. GitHub: nileslabs/playground_api (MIT).
+api: Playground REST API
+plan_count: 1
+currency: USD
+plans:
+  - name: Free
+    price: 0
+    billing_period: none
+    signup_required: false
+    auth_required: false
+    license: MIT
+    included:
+      - Full REST + GraphQL mock surface, no key
+      - Stateful per-session mutation overlays
+      - Dynamic custom collections + domain seed templates
+      - SVG avatar + thumbnail generators
+      - Network/chaos simulation (latency, status, rate-limit)
+      - OpenAPI, Postman, Bruno, Insomnia and TypeScript downloads
+    limits:
+      overlay_records_per_resource: 30
+      session_retention_days: 10
+      max_page_size: 200
+    overage: none
+note: >-
+  Playground API is entirely free and open (MIT), with no tiers, no paid plans,
+  no signup and no billing. The single Free plan is recorded with its published
+  operational limits. There is no enterprise/contact-sales tier.

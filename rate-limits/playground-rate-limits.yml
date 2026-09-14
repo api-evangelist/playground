@@ -1,0 +1,29 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com/llms-full.txt (Network Simulation
+  Capabilities) and /llms.txt, fetched 2026-09-14.
+api: Playground REST API
+limit_count: 0
+enforced_limits: false
+limits: []
+simulated:
+  description: >-
+    Playground enforces no real rate limits (it is a free mock sandbox). It
+    instead lets clients SIMULATE a 429 on demand to test their retry/backoff
+    handling.
+  trigger:
+    query: _ratelimit=true
+    header: 'X-Simulate-RateLimit: true'
+  response:
+    status: 429
+    headers:
+      - Retry-After
+capacity_notes:
+  - Page size capped at limit=200 for list endpoints.
+  - Session overlay capped at 30 created records per resource.
+  - Session overlays auto-expire after 10 days of inactivity.
+note: >-
+  limit_count is an honest 0: no per-key/per-account/per-endpoint throttle is
+  documented or observed. The only rate-limit behavior is the opt-in simulation,
+  which emits a real 429 + Retry-After for testing purposes.

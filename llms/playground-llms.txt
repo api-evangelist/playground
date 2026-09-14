@@ -1,0 +1,64 @@
+# Playground API
+> Free, zero-configuration, stateful mock REST and GraphQL API sandbox for frontend developers, mobile engineers, QA test automation, educators, and AI coding agents.
+
+## Core Architectural Differentiator
+Unlike traditional static mock APIs (e.g. JSONPlaceholder, DummyJSON), Playground API provides **stateful per-session virtual mutation overlays**:
+- Real `POST`, `PUT`, `PATCH`, and `DELETE` mutations persist across subsequent `GET` queries in the caller's session.
+- Global baseline dataset remains read-only and pristine; multiple users and automated test runs never collide.
+- In browser environments, session identity is maintained via `credentials: 'include'`.
+- In non-browser environments (Node.js, Playwright, cURL), pass `X-Playground-Identity: <session-id>`.
+
+## Canonical URLs & Machine Endpoints
+- Canonical Website: https://playground.nileslabs.com
+- Interactive Documentation: https://playground.nileslabs.com/docs
+- REST Base API URL: https://playground.nileslabs.com/api/v1
+- GraphQL Gateway: https://playground.nileslabs.com/api/v1/graphql
+- Machine-Readable Product Manifest: https://playground.nileslabs.com/product.json
+- Full AI Technical Specification: https://playground.nileslabs.com/llms-full.txt
+- GitHub Repository: https://github.com/nileslabs/playground_api
+
+## REST API Resources & Collections
+- **GET /posts** (100 blog posts; supports `?user_id=1`, `?_page=1&_limit=10`, `?_sort=title&_order=desc`, `?q=search`)
+- **GET /posts/:id/comments** (Relational sub-resource comments for a post)
+- **GET /comments** (300 discussion comments; supports `?post_id=1`)
+- **GET /users** (25 comprehensive user profiles with nested address & company objects)
+- **GET /users/:id/posts** (Relational posts authored by a user)
+- **GET /users/:id/todos** (Relational todos assigned to a user)
+- **GET /todos** (125 task checklist items; supports `?completed=true`, `?user_id=1`)
+- **POST /auth/login** (Simulated JWT auth token generation)
+- **POST /auth/refresh** (Simulated JWT token rotation & refresh loop testing)
+- **GET /auth/me** (Bearer token protected user profile)
+- **ALL /custom/:collection** (Dynamic schema-less virtual collections with full CRUD persistence)
+- **GET /avatars/:seed** (Deterministic SVG vector user avatar generator)
+- **GET /thumbnails/:seed** (Deterministic SVG placeholder hero image generator)
+
+## Network Simulation & Chaos Testing
+Simulate network conditions without changing your application code:
+- **Latency Delay**: Append `?_delay=1500` or send header `X-Simulate-Delay: 1500` (in milliseconds, 1-5000ms).
+- **HTTP Status Code**: Append `?_status=500` or send header `X-Simulate-Status: 500` (simulates 400-599 error boundaries).
+- **Rate Limit (429)**: Append `?_ratelimit=true` or send header `X-Simulate-RateLimit: true`.
+
+## Session Sandbox Management
+- **DELETE /session/reset**: Purge all private session mutations and restore baseline state.
+- **GET /session/snapshot**: Export current session mutations as a portable JSON snapshot.
+- **POST /session/snapshot**: Import/restore sandbox mutation state from JSON.
+
+## Downloads & Client Specs
+- OpenAPI 3.0: https://playground.nileslabs.com/api/v1/downloads/openapi.json
+- Postman Collection: https://playground.nileslabs.com/api/v1/downloads/postman.json
+- Bruno Collection: https://playground.nileslabs.com/api/v1/downloads/bruno.json
+- Insomnia Collection: https://playground.nileslabs.com/api/v1/downloads/insomnia.json
+- TypeScript SDK (.d.ts): https://playground.nileslabs.com/api/v1/downloads/playground-api.d.ts
+
+## Documentation Pathways
+- Overview: https://playground.nileslabs.com/docs/introduction
+- Quickstart (30-Sec): https://playground.nileslabs.com/docs/quickstart
+- How Sandboxing Works: https://playground.nileslabs.com/docs/how-it-works
+- Framework Recipes (React, Vue, Next.js, Playwright): https://playground.nileslabs.com/docs/recipes
+- Query Filtering & Relations: https://playground.nileslabs.com/docs/filtering
+- Interactive API Studio: https://playground.nileslabs.com/docs/studio
+- Network Simulation Guide: https://playground.nileslabs.com/docs/simulation
+- HTTP Errors & Status Codes: https://playground.nileslabs.com/docs/errors
+- Playground API vs Alternatives: https://playground.nileslabs.com/docs/comparisons
+- GraphQL Explorer & Schema: https://playground.nileslabs.com/docs/graphql
+- AI Coding Agent Guidelines: https://playground.nileslabs.com/docs/ai

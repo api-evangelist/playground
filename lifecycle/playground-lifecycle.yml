@@ -1,0 +1,37 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com/product.json (version), /llms-full.txt, and
+  GitHub nileslabs/playground_api, fetched 2026-09-14.
+api: Playground REST API
+versioning:
+  scheme: uri-path
+  current_version: v1
+  product_version: 1.0.0
+  policy_url: null
+  note: Single stable v1 surface under /api/v1. No documented version-negotiation policy.
+deprecation:
+  policy: none
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    No RFC 8594 Sunset/Deprecation headers and no published deprecation policy.
+    No operations are marked deprecated in the OpenAPI.
+sla:
+  published: false
+  note: Free, best-effort hosting (Vercel). No SLA and no uptime commitment stated.
+status_page:
+  url: null
+  note: No status page found (no /.well-known, no status.* subdomain referenced in docs).
+support:
+  channels:
+    - GitHub repository (nileslabs/playground_api)
+  note: Community/OSS support via GitHub; no dedicated support portal.
+state_retention:
+  session_overlay_days: 10
+  overlay_records_per_resource: 30
+note: >-
+  Lifecycle is that of an actively published OSS mock tool at 1.0.0: stable v1,
+  MIT licensed, no deprecation/status/SLA apparatus. No StatusPage or Deprecation
+  pointer emitted because neither surface exists.

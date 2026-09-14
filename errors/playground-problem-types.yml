@@ -1,0 +1,48 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  Live 404 response body observed 2026-09-14 (GET
+  https://playground.nileslabs.com/api/v1/openapi.json ->
+  {"error":"Cannot find ...","message":"..."}), plus the Network Simulation
+  section of https://playground.nileslabs.com/llms-full.txt. The published
+  OpenAPI declares only 200 responses, so error shapes are documented from the
+  live surface and provider docs.
+api: Playground REST API
+format: custom-json
+media_type: application/json
+rfc9457: false
+envelope:
+  fields:
+    error: short machine string / summary
+    message: human-readable description
+  example: '{"error":"Cannot find /api/v1/openapi.json on this server.","message":"Cannot find /api/v1/openapi.json on this server."}'
+problem_types:
+  - status: 404
+    title: Not Found
+    when: Unknown path, or a record ID that does not exist in baseline or overlay.
+    observed: true
+    remediation: Check the path is under /api/v1 and the ID format (integer or local-<uuid>).
+  - status: 401
+    title: Unauthorized
+    when: GET/PATCH /auth/me called without a valid Authorization Bearer token.
+    observed: false
+    remediation: 'Obtain a token from POST /auth/login or /auth/register and send Authorization: Bearer <token>.'
+  - status: 429
+    title: Too Many Requests
+    when: 'Simulated on demand via ?_ratelimit=true or X-Simulate-RateLimit: true.'
+    observed: false
+    headers:
+      - Retry-After
+    remediation: Honor Retry-After; this is a testable simulation, not an enforced limit.
+  - status: '4xx/5xx (simulated)'
+    title: Simulated error boundary
+    when: >-
+      Any request carrying ?_status=<code> or X-Simulate-Status: <code> (400-599)
+      returns that status so clients can exercise error branches.
+    observed: false
+    remediation: Remove the _status parameter / X-Simulate-Status header to get a normal response.
+notes: >-
+  This is a mock/sandbox API: its most important error behavior is that errors
+  are DELIBERATELY INDUCIBLE (status and rate-limit simulation) rather than
+  organically enforced. Successful mutations return 200/201; deletes return 204
+  No Content (custom-collection deletes return a {message} confirmation body).

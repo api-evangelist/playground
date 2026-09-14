@@ -1,0 +1,63 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  No hosted or packaged MCP server exists. Searched /llms.txt, /llms-full.txt,
+  /product.json, the docs, GitHub (nileslabs/playground_api), npm (@nileslabs/*)
+  and probed /mcp, /api/v1/mcp, /api/mcp (all 404) on 2026-09-14. The tool list
+  below is a CANDIDATE derived from the published OpenAPI operations; nobody
+  ships this server.
+api: Playground REST API
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+candidate_tools:
+  - tool: list_users
+    rest: GET /api/v1/users
+  - tool: get_user
+    rest: GET /api/v1/users/{id}
+  - tool: create_user
+    rest: POST /api/v1/users
+  - tool: update_user
+    rest: PUT|PATCH /api/v1/users/{id}
+  - tool: delete_user
+    rest: DELETE /api/v1/users/{id}
+  - tool: list_posts
+    rest: GET /api/v1/posts
+  - tool: get_post
+    rest: GET /api/v1/posts/{id}
+  - tool: create_post
+    rest: POST /api/v1/posts
+  - tool: update_post
+    rest: PUT|PATCH /api/v1/posts/{id}
+  - tool: delete_post
+    rest: DELETE /api/v1/posts/{id}
+  - tool: list_comments
+    rest: GET /api/v1/comments
+  - tool: list_todos
+    rest: GET /api/v1/todos
+  - tool: create_todo
+    rest: POST /api/v1/todos
+  - tool: auth_login
+    rest: POST /api/v1/auth/login
+  - tool: get_profile
+    rest: GET /api/v1/auth/me
+  - tool: generate_avatar
+    rest: GET /api/v1/avatars/{seed}.svg
+  - tool: generate_thumbnail
+    rest: GET /api/v1/thumbnails/{seed}.svg
+  - tool: query_custom_collection
+    rest: GET /api/v1/custom/{collection}
+  - tool: seed_template
+    rest: POST /api/v1/custom/seed
+  - tool: reset_session
+    rest: DELETE /api/v1/session/reset
+note: >-
+  Candidate only — recording mode:none so this is never mistaken for a reachable
+  agent surface. Because the API needs no auth and has a documented X-Playground-
+  Identity session model, it would be a strong low-friction MCP target, but no
+  such server has been published.

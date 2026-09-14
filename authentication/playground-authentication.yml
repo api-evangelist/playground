@@ -1,0 +1,49 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  https://playground.nileslabs.com/llms-full.txt (Resource: Authentication) and
+  https://playground.nileslabs.com/product.json (authentication block), fetched
+  2026-09-14. The published OpenAPI declares no securitySchemes, so this profile
+  is authored from the provider's own documentation.
+api: Playground REST API
+summary: >-
+  The API is public and requires NO authentication for the mock data surface
+  (users, posts, comments, todos, custom collections, media, session). A
+  SIMULATED JWT flow exists purely so developers can exercise bearer-protected
+  routes: POST /auth/login and POST /auth/register return signed HS256 JWT
+  access + refresh tokens, POST /auth/refresh rotates them, and GET/PATCH
+  /auth/me require an Authorization: Bearer <access_token> header. Tokens are
+  cosmetic sandbox artifacts, not real credentials — any username/password is
+  accepted and no account is provisioned.
+required: false
+schemes:
+  - name: bearerAuth
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    description: >-
+      Simulated JWT bearer token obtained from POST /auth/login, /auth/register
+      or /auth/refresh. Applies only to GET /auth/me and PATCH /auth/me. Access
+      token lifetime is 900 seconds (expires_in), refreshable via the refresh
+      token. Not a real credential; issued to any caller.
+    applies_to:
+      - GET /api/v1/auth/me
+      - PATCH /api/v1/auth/me
+session_identity:
+  description: >-
+    Session state (the per-session mutation overlay), not authentication, is how
+    Playground isolates callers. In browsers, send credentials: 'include' /
+    withCredentials so the session cookie is carried. In non-browser clients
+    (Node, Playwright, cURL) send a stable X-Playground-Identity: <session-id>
+    header to bind mutations to a private overlay.
+  browser: cookie via credentials:'include'
+  non_browser_header: X-Playground-Identity
+token_endpoints:
+  login: POST /api/v1/auth/login
+  register: POST /api/v1/auth/register
+  refresh: POST /api/v1/auth/refresh
+  profile: GET /api/v1/auth/me
+notes: >-
+  No OAuth2/OIDC: /.well-known/openid-configuration and
+  /.well-known/oauth-authorization-server both 404. No API keys, no signup, no
+  billing. MIT licensed.

@@ -1,0 +1,51 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for Playground API
+  version: 1.0.0
+extends: ../openapi/playground-openapi.json
+x-provenance:
+  generated: '2026-09-14'
+  method: generated
+  source: >-
+    Non-destructive enhancements to the provider's published OpenAPI 3.0.3.
+    Corrects the transport/host mismatch (spec servers[] is the raw Vercel
+    origin over http; the documented canonical base is HTTPS at
+    playground.nileslabs.com/api/v1) and adds the simulated Bearer scheme and
+    resource tags the thin spec omits. The original spec is never mutated.
+actions:
+  - target: $.servers
+    description: >-
+      Add the documented canonical HTTPS base alongside the raw Vercel origin.
+    update:
+      - url: https://playground.nileslabs.com/api/v1
+        description: >-
+          Canonical HTTPS base (per docs, product.json and llms.txt). The
+          spec's own servers[] value http://playground-api-backend.vercel.app is
+          the underlying Vercel deployment origin.
+  - target: $.components.securitySchemes
+    description: Document the simulated Bearer JWT the docs describe but the spec omits.
+    update:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+        description: >-
+          Simulated JWT from /auth/login|register|refresh. Required only for
+          GET/PATCH /auth/me. Not a real credential.
+  - target: $.info
+    description: Add license and contact/repository the spec omits.
+    update:
+      license:
+        name: MIT
+      x-repository: https://github.com/nileslabs/playground_api
+      x-machine-manifest: https://playground.nileslabs.com/product.json
+  - target: "$.paths['/api/v1/auth/me'].get"
+    description: Attach the bearer security requirement to the profile read.
+    update:
+      security:
+        - bearerAuth: []
+  - target: "$.paths['/api/v1/auth/me'].patch"
+    description: Attach the bearer security requirement to the profile update.
+    update:
+      security:
+        - bearerAuth: []

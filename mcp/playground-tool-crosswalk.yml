@@ -1,0 +1,98 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  Derived by binding the live GraphQL fields (graphql/playground-graphql.graphql,
+  introspected 2026-09-14) and the candidate MCP tools (mcp/playground-mcp.yml)
+  to their backing REST operations in openapi/playground-openapi.json. The
+  OpenAPI declares no operationIds, so REST operations are addressed by
+  METHOD + PATH (their real, stable identity in the spec).
+api: Playground REST API
+surfaces:
+  openapi:
+    path: openapi/playground-openapi.json
+    gated: false
+  graphql:
+    endpoint: https://playground.nileslabs.com/api/v1/graphql
+    gated: false
+    introspection: open
+  mcp:
+    url: null
+    gated: null
+    note: No MCP server published; candidate tools only.
+crosswalk:
+  - tool: users (query) / user (query)
+    category: read
+    rest: ["GET /api/v1/users", "GET /api/v1/users/{id}"]
+    binding: direct
+    confidence: high
+  - tool: me (query)
+    category: read
+    rest: [GET /api/v1/auth/me]
+    binding: direct
+    confidence: high
+  - tool: posts (query) / post (query)
+    category: read
+    rest: ["GET /api/v1/posts", "GET /api/v1/posts/{id}"]
+    binding: direct
+    confidence: high
+  - tool: comments (query) / comment (query)
+    category: read
+    rest: ["GET /api/v1/comments", "GET /api/v1/comments/{id}"]
+    binding: direct
+    confidence: high
+  - tool: todos (query) / todo (query)
+    category: read
+    rest: ["GET /api/v1/todos", "GET /api/v1/todos/{id}"]
+    binding: direct
+    confidence: high
+  - tool: login (mutation)
+    category: auth
+    rest: [POST /api/v1/auth/login]
+    binding: direct
+    confidence: high
+  - tool: register (mutation)
+    category: auth
+    rest: [POST /api/v1/auth/register]
+    binding: direct
+    confidence: high
+  - tool: createUser / updateUser / deleteUser (mutation)
+    category: write
+    rest: ["POST /api/v1/users", "PUT /api/v1/users/{id}", "PATCH /api/v1/users/{id}", "DELETE /api/v1/users/{id}"]
+    binding: direct
+    confidence: high
+  - tool: createPost / updatePost / deletePost (mutation)
+    category: write
+    rest: ["POST /api/v1/posts", "PUT /api/v1/posts/{id}", "PATCH /api/v1/posts/{id}", "DELETE /api/v1/posts/{id}"]
+    binding: direct
+    confidence: high
+  - tool: createComment / updateComment / deleteComment (mutation)
+    category: write
+    rest: ["POST /api/v1/comments", "PUT /api/v1/comments/{id}", "PATCH /api/v1/comments/{id}", "DELETE /api/v1/comments/{id}"]
+    binding: direct
+    confidence: high
+  - tool: createTodo / updateTodo / deleteTodo (mutation)
+    category: write
+    rest: ["POST /api/v1/todos", "PUT /api/v1/todos/{id}", "PATCH /api/v1/todos/{id}", "DELETE /api/v1/todos/{id}"]
+    binding: direct
+    confidence: high
+mcp_only: []
+rest_only:
+  - rest: GET /api/v1/avatars/{seed}.svg
+    reason: SVG avatar generator; no GraphQL field.
+  - rest: GET /api/v1/thumbnails/{seed}.svg
+    reason: SVG thumbnail generator; no GraphQL field.
+  - rest: GET|POST /api/v1/custom, POST /api/v1/custom/seed, GET|POST|DELETE /api/v1/custom/{collection}
+    reason: Dynamic schema-less custom collections; not modeled as typed GraphQL fields.
+  - rest: GET /api/v1/session/export, POST /api/v1/session/import, DELETE /api/v1/session/reset
+    reason: Session overlay management; REST-only.
+coverage:
+  graphql_query_fields: 9
+  graphql_mutation_fields: 14
+  rest_operations: 39
+  bound_rows: 15
+  rest_only_groups: 4
+note: >-
+  GraphQL covers the four core collections (users/posts/comments/todos) plus
+  auth for both read and write; media, custom collections and session controls
+  are REST-only. No fabrication — every row maps a field that exists in the live
+  schema to an operation that exists in the spec.
