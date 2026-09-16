@@ -11,6 +11,14 @@ created: '2026-09-14'
 modified: '2026-09-14'
 specificationVersion: '0.21'
 tags:
+  - Developer Tools
+  - Testing
+  - Mock API
+  - api-sandbox
+  - REST
+  - GraphQL
+  - E2E Testing
+tags_raw:
   - developer-tools
   - testing
   - mock-api
@@ -19,49 +27,195 @@ tags:
   - graphql
   - e2e-testing
 apis:
-  - name: Playground REST API
-    description: >-
-      Free stateful mock REST API with session-scoped mutation overlays, dynamic collections, media generators, chaos
-      simulation, and simulated JWT auth. Canonical HTTPS base is playground.nileslabs.com/api/v1 (OpenAPI/Postman
-      servers value declares a raw Vercel origin).
-    humanURL: https://playground.nileslabs.com/docs
-    baseURL: https://playground.nileslabs.com/api/v1
-    tags:
-      - developer-tools
-      - testing
-      - mock-api
-      - api-sandbox
-      - rest
-      - graphql
-      - e2e-testing
-    properties:
-      - type: OpenAPI
-        url: https://playground.nileslabs.com/api/v1/downloads/openapi.json
-      - type: PostmanCollection
-        url: https://playground.nileslabs.com/api/v1/downloads/postman.json
-      - type: Documentation
-        url: https://playground.nileslabs.com/docs
-      - type: LLMsTxt
-        url: https://playground.nileslabs.com/llms.txt
-  - name: Playground GraphQL API
-    description: >-
-      GraphQL gateway providing stateful mock query and mutation access to the same dataset, with an interactive
-      explorer.
-    humanURL: https://playground.nileslabs.com/docs/graphql
-    baseURL: https://playground.nileslabs.com/api/v1/graphql
-    tags:
-      - developer-tools
-      - testing
-      - mock-api
-      - api-sandbox
-      - rest
-      - graphql
-      - e2e-testing
-    properties:
-      - type: GraphQL
-        url: https://playground.nileslabs.com/api/v1/graphql
-      - type: Documentation
-        url: https://playground.nileslabs.com/docs/graphql
+- name: Playground GraphQL API
+  description: >-
+    GraphQL gateway providing stateful mock query and mutation access to the same dataset, with an interactive
+    explorer.
+  humanURL: https://playground.nileslabs.com/docs/graphql
+  baseURL: https://playground.nileslabs.com/api/v1/graphql
+  tags:
+  - Developer Tools
+  - Testing
+  - Mock API
+  - api-sandbox
+  - REST
+  - GraphQL
+  - E2E Testing
+  tags_raw:
+  - developer-tools
+  - testing
+  - mock-api
+  - api-sandbox
+  - rest
+  - graphql
+  - e2e-testing
+  properties:
+  - type: GraphQL
+    url: https://playground.nileslabs.com/api/v1/graphql
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs/graphql
+- aid: playground:playground-auth-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Auth API
+  description: >-
+    The Auth API from Playground API — Free Stateful Mock REST & GraphQL Service — 4 operation(s) for
+    auth.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-auth-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-avatars-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Avatars API
+  description: >-
+    The Avatars API from Playground API — Free Stateful Mock REST & GraphQL Service — 1 operation(s) for
+    avatars.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Avatars
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-avatars-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-comments-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Comments API
+  description: >-
+    The Comments API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s)
+    for comments.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-comments-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-custom-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Custom API
+  description: >-
+    The Custom API from Playground API — Free Stateful Mock REST & GraphQL Service — 4 operation(s) for
+    custom.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Custom
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-custom-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-posts-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Posts API
+  description: >-
+    The Posts API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for
+    posts.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-posts-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-session-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Session API
+  description: >-
+    The Session API from Playground API — Free Stateful Mock REST & GraphQL Service — 3 operation(s) for
+    session.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Session
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-session-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-thumbnails-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Thumbnails API
+  description: >-
+    The Thumbnails API from Playground API — Free Stateful Mock REST & GraphQL Service — 1 operation(s)
+    for thumbnails.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Thumbnails
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-thumbnails-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-todos-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Todos API
+  description: >-
+    The Todos API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for
+    todos.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Todos
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-todos-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-users-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service Users API
+  description: >-
+    The Users API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for
+    users.
+  humanURL: https://playground.nileslabs.com/docs
+  baseURL: https://playground.nileslabs.com/api/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-users-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
 maintainers:
   - FN: Nilesh Kumar
     url: https://nileslabs.com
