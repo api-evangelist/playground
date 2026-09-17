@@ -180,24 +180,6 @@ apis:
     url: https://playground.nileslabs.com/docs
   - type: LLMsTxt
     url: https://playground.nileslabs.com/llms.txt
-- aid: playground:playground-todos-api
-  name: Playground API — Free Stateful Mock REST & GraphQL Service Todos API
-  description: >-
-    The Todos API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for
-    todos.
-  humanURL: https://playground.nileslabs.com/docs
-  baseURL: https://playground.nileslabs.com/api/v1
-  tags:
-  - Todos
-  properties:
-  - type: OpenAPI
-    url: openapi/playground-todos-api-openapi.yml
-  - type: PostmanCollection
-    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
-  - type: Documentation
-    url: https://playground.nileslabs.com/docs
-  - type: LLMsTxt
-    url: https://playground.nileslabs.com/llms.txt
 - aid: playground:playground-users-api
   name: Playground API — Free Stateful Mock REST & GraphQL Service Users API
   description: >-
@@ -210,6 +192,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/playground-users-api-openapi.yml
+  - type: PostmanCollection
+    url: https://playground.nileslabs.com/api/v1/downloads/postman.json
+  - type: Documentation
+    url: https://playground.nileslabs.com/docs
+  - type: LLMsTxt
+    url: https://playground.nileslabs.com/llms.txt
+- aid: playground:playground-to-dos-api
+  name: Playground API — Free Stateful Mock REST & GraphQL Service To Dos API
+  description: >-
+    The To Dos API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for
+    to dos.
+  humanURL: https://playground.nileslabs.com/docs/graphql
+  baseURL: https://playground.nileslabs.com/api/v1/graphql
+  tags:
+  - To Dos
+  properties:
+  - type: OpenAPI
+    url: openapi/playground-to-dos-api-openapi.yml
   - type: PostmanCollection
     url: https://playground.nileslabs.com/api/v1/downloads/postman.json
   - type: Documentation
