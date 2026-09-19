@@ -62,6 +62,8 @@ apis:
   humanURL: https://playground.nileslabs.com/docs
   baseURL: https://playground.nileslabs.com/api/v1
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -152,6 +154,8 @@ apis:
   humanURL: https://playground.nileslabs.com/docs
   baseURL: https://playground.nileslabs.com/api/v1
   tags:
+  - Sessions
+  tags_raw:
   - Session
   properties:
   - type: OpenAPI
@@ -188,6 +192,8 @@ apis:
   humanURL: https://playground.nileslabs.com/docs
   baseURL: https://playground.nileslabs.com/api/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -206,6 +212,8 @@ apis:
   humanURL: https://playground.nileslabs.com/docs/graphql
   baseURL: https://playground.nileslabs.com/api/v1/graphql
   tags:
+  - To-Dos
+  tags_raw:
   - To Dos
   properties:
   - type: OpenAPI
