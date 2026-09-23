@@ -1,0 +1,103 @@
+openapi: 3.2.0
+info:
+  title: Playground Session API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Session
+paths:
+  /api/v1/session/export:
+    get:
+      parameters:
+      - name: resource
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                version: '1.0'
+                exportedAt: '2026-08-02T23:00:00.000Z'
+                identityId: 550e8400-e29b-41d4-a716-446655440000
+                targetResource: all
+                stats:
+                  totalRecords: 2
+                  creates: 1
+                  updates: 1
+                  deletes: 0
+                records:
+                - resource: users
+                  op: create
+                  targetId: null
+                  data:
+                    name: Custom User
+                  createdAt: '2026-08-02T22:00:00.000Z'
+      tags:
+      - Session
+      summary: Get api session export
+      x-summary-source: derived
+      operationId: getApiV1SessionExport
+      x-operation-id-source: derived
+  /api/v1/session/import:
+    post:
+      parameters:
+      - name: strategy
+        required: false
+        schema:
+          type: string
+      - name: resource
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Session sandbox snapshot imported successfully.
+                importedRecords: 1
+                strategy: replace
+                affectedResources:
+                - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              version: '1.0'
+              records:
+              - resource: users
+                op: create
+                data:
+                  name: Restored User
+                  email: restored@sandbox.dev
+      tags:
+      - Session
+      summary: Create api session import
+      x-summary-source: derived
+      operationId: postApiV1SessionImport
+      x-operation-id-source: derived
+  /api/v1/session/reset:
+    delete:
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Session sandbox overlay purged successfully.
+                purgedRecords: 3
+      tags:
+      - Session
+      summary: Delete api session reset
+      x-summary-source: derived
+      operationId: deleteApiV1SessionReset
+      x-operation-id-source: derived

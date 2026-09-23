@@ -1,0 +1,242 @@
+openapi: 3.2.0
+info:
+  title: Playground Comments API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Comments
+paths:
+  /api/v1/comments:
+    get:
+      summary: Retrieve a paginated list of comments.
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Full-text search query term across name, email, body, etc.
+        schema:
+          type: string
+      - name: post_id
+        in: query
+        required: false
+        description: Filter comments by parent post ID (e.g. post_id=1).
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        description: Page number (1-indexed, default 1).
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page (default 10, max 200).
+        schema:
+          type: integer
+      - name: _sort
+        in: query
+        required: false
+        description: Field name to sort results by (e.g. name, email, id).
+        schema:
+          type: string
+      - name: _order
+        in: query
+        required: false
+        description: 'Sort direction: asc (default) or desc.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                data:
+                - id: local-c3d4e5f6-7890-abcd-ef12-345678901234
+                  post_id: 1
+                  name: id labore ex et quam laborum
+                  _sandbox: created
+                - id: 1
+                  post_id: 1
+                  name: id labore ex et quam laborum
+                  email: Eliseo@gardner.biz
+                  body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+                pagination:
+                  page: 1
+                  limit: 10
+                  total: 301
+                  totalPages: 31
+                  hasNextPage: true
+                  hasPrevPage: false
+      tags:
+      - Comments
+      operationId: getApiV1Comments
+      x-operation-id-source: derived
+    post:
+      summary: Create a new session sandbox comment record.
+      parameters:
+      - name: post_id
+        in: body
+        required: false
+        description: Target post ID.
+        schema:
+          type: integer
+      - name: name
+        in: body
+        required: false
+        description: Comment title or reviewer name.
+        schema:
+          type: string
+      - name: email
+        in: body
+        required: false
+        description: Commenter email address.
+        schema:
+          type: string
+      - name: body
+        in: body
+        required: false
+        description: Comment text content.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: local-c3d4e5f6-7890-abcd-ef12-345678901234
+                post_id: 1
+                name: id labore ex et quam laborum
+                email: Eliseo@gardner.biz
+                body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+                _sandbox: created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              post_id: 1
+              name: id labore ex et quam laborum
+              email: Eliseo@gardner.biz
+              body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+      tags:
+      - Comments
+      operationId: postApiV1Comments
+      x-operation-id-source: derived
+  /api/v1/comments/{id}:
+    get:
+      summary: Retrieve a single comment by ID.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Comment ID (e.g. 1 for global comment or local-<uuid> for sandbox comment).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                post_id: 1
+                name: id labore ex et quam laborum
+                email: Eliseo@gardner.biz
+                body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+      tags:
+      - Comments
+      operationId: getApiV1CommentsById
+      x-operation-id-source: derived
+    put:
+      summary: Replace an existing comment record in the session overlay.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Comment ID to update (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                post_id: 1
+                name: id labore ex et quam laborum (Updated)
+                email: Eliseo@gardner.biz
+                body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              post_id: 1
+              name: id labore ex et quam laborum (Updated)
+              email: Eliseo@gardner.biz
+              body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+      tags:
+      - Comments
+      operationId: putApiV1CommentsById
+      x-operation-id-source: derived
+    patch:
+      summary: Partially update specific fields of a comment record in the session overlay
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Comment ID to patch (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                post_id: 1
+                name: id labore ex et quam laborum (Updated)
+                email: Eliseo@gardner.biz
+                body: laudantium enim quasi est quidem magnam voluptatem aut eveniet quas aliquid sint expedita consequuntur alias ea quam expedita possimus
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: id labore ex et quam laborum (Updated)
+      tags:
+      - Comments
+      operationId: patchApiV1CommentsById
+      x-operation-id-source: derived
+    delete:
+      summary: Remove a comment record from the requesting session view.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Comment ID to delete (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Resource 'comments' with id '1' deleted successfully from sandbox overlay
+                id: 1
+                resource: comments
+      tags:
+      - Comments
+      operationId: deleteApiV1CommentsById
+      x-operation-id-source: derived

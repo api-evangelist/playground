@@ -1,0 +1,32 @@
+# Front Door AI Index — playground — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: playground
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: playground.nileslabs.com
+  final_host: playground.nileslabs.com
+  ownership: own
+  owner: playground
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 11
+  host_score: 11
+  density: 8.05
+  words: 1367
+  tiers:
+    agentic: 5
+    core: 4
+    model: 2
+  ambiguous: 3
+  top_terms:
+    AI: 4
+    agent: 3
+    llms.txt: 2
+    AI agent: 1
+    ChatGPT: 1
+    Claude: 1
+    copilot: 1
+    prompts: 1

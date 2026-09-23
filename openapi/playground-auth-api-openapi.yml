@@ -1,0 +1,109 @@
+openapi: 3.2.0
+info:
+  title: Playground Auth API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Auth
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Authenticate user with username/email & password to receive signed JWT access…
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              username: Bret
+              password: password123
+      tags:
+      - Auth
+      operationId: postApiV1AuthLogin
+      x-operation-id-source: derived
+  /api/v1/auth/register:
+    post:
+      summary: Register a new session user and immediately receive signed JWT tokens
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Alice Smith
+              username: alice
+              email: alice@example.com
+              password: password123
+      tags:
+      - Auth
+      operationId: postApiV1AuthRegister
+      x-operation-id-source: derived
+  /api/v1/auth/refresh:
+    post:
+      summary: Exchange a valid refresh token for a fresh 15-minute JWT access token
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6...
+      tags:
+      - Auth
+      operationId: postApiV1AuthRefresh
+      x-operation-id-source: derived
+  /api/v1/auth/me:
+    get:
+      summary: 'Retrieve current authenticated user profile using Authorization: Bearer'
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: {}
+      tags:
+      - Auth
+      operationId: getApiV1AuthMe
+      x-operation-id-source: derived
+    patch:
+      summary: Update current authenticated user profile in the session sandbox using…
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Bret - Updated Profile
+              email: bret.new@example.com
+      tags:
+      - Auth
+      operationId: patchApiV1AuthMe
+      x-operation-id-source: derived

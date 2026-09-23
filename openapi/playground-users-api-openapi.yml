@@ -1,0 +1,295 @@
+openapi: 3.2.0
+info:
+  title: Playground Users API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Users
+paths:
+  /api/v1/users:
+    get:
+      summary: Retrieve a paginated list of users.
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Full-text search query term across name, username, email, etc.
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number (1-indexed, default 1).
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page (default 10, max 200).
+        schema:
+          type: integer
+      - name: _sort
+        in: query
+        required: false
+        description: Field name to sort results by (e.g. name, id, username, email).
+        schema:
+          type: string
+      - name: _order
+        in: query
+        required: false
+        description: 'Sort direction: asc (default) or desc.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                data:
+                - id: local-a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                  name: Leanne Graham
+                  username: bret
+                  email: sincere@april.biz
+                  _sandbox: created
+                - id: 1
+                  name: Leanne Graham
+                  username: bret
+                  email: sincere@april.biz
+                  phone: +1-770-555-0123
+                  website: hildegard.org
+                  address:
+                    street: Kulas Light
+                    city: Gwenborough
+                    zipcode: 92998-3874
+                  company:
+                    name: Romaguera-Crona
+                    catchPhrase: Multi-layered client-server neural-net
+                pagination:
+                  page: 1
+                  limit: 10
+                  total: 26
+                  totalPages: 3
+                  hasNextPage: true
+                  hasPrevPage: false
+      tags:
+      - Users
+      operationId: getApiV1Users
+      x-operation-id-source: derived
+    post:
+      summary: Create a new session sandbox user record.
+      parameters:
+      - name: name
+        in: body
+        required: false
+        description: Full name of the user.
+        schema:
+          type: string
+      - name: username
+        in: body
+        required: false
+        description: Username.
+        schema:
+          type: string
+      - name: email
+        in: body
+        required: false
+        description: Email address.
+        schema:
+          type: string
+      - name: phone
+        in: body
+        required: false
+        description: Phone number.
+        schema:
+          type: string
+      - name: website
+        in: body
+        required: false
+        description: Website URL.
+        schema:
+          type: string
+      - name: address
+        in: body
+        required: false
+        description: JSON object containing street, city, zipcode.
+        schema:
+          type: string
+      - name: company
+        in: body
+        required: false
+        description: JSON object containing company name and catchPhrase.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: local-a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                name: Leanne Graham
+                username: bret
+                email: sincere@april.biz
+                _sandbox: created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Leanne Graham
+              username: bret
+              email: sincere@april.biz
+              phone: +1-770-555-0123
+              website: hildegard.org
+              address:
+                street: Kulas Light
+                city: Gwenborough
+                zipcode: 92998-3874
+              company:
+                name: Romaguera-Crona
+                catchPhrase: Multi-layered client-server neural-net
+      tags:
+      - Users
+      operationId: postApiV1Users
+      x-operation-id-source: derived
+  /api/v1/users/{id}:
+    get:
+      summary: Retrieve a single user by ID.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID (e.g. 1 for global user or local-<uuid> for sandbox user).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Leanne Graham
+                username: bret
+                email: sincere@april.biz
+                phone: +1-770-555-0123
+                website: hildegard.org
+                address:
+                  street: Kulas Light
+                  city: Gwenborough
+                  zipcode: 92998-3874
+                company:
+                  name: Romaguera-Crona
+                  catchPhrase: Multi-layered client-server neural-net
+      tags:
+      - Users
+      operationId: getApiV1UsersById
+      x-operation-id-source: derived
+    put:
+      summary: Replace an existing user record in the session overlay.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID to update (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Leanne Graham (Updated)
+                username: bret
+                email: sincere@april.biz
+                phone: +1-770-555-0123
+                website: https://updated-user.dev
+                address:
+                  street: Kulas Light
+                  city: Gwenborough
+                  zipcode: 92998-3874
+                company:
+                  name: Romaguera-Crona
+                  catchPhrase: Multi-layered client-server neural-net
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Leanne Graham (Updated)
+              username: bret
+              email: sincere@april.biz
+              website: https://updated-user.dev
+      tags:
+      - Users
+      operationId: putApiV1UsersById
+      x-operation-id-source: derived
+    patch:
+      summary: Partially update specific fields of a user record in the session overlay
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID to patch (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Leanne Graham (Updated)
+                username: bret
+                email: sincere@april.biz
+                phone: +1-770-555-0123
+                website: https://updated-user.dev
+                address:
+                  street: Kulas Light
+                  city: Gwenborough
+                  zipcode: 92998-3874
+                company:
+                  name: Romaguera-Crona
+                  catchPhrase: Multi-layered client-server neural-net
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Leanne Graham (Updated)
+              website: https://updated-user.dev
+      tags:
+      - Users
+      operationId: patchApiV1UsersById
+      x-operation-id-source: derived
+    delete:
+      summary: Remove a user record from the requesting session view.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID to delete (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Resource 'users' with id '1' deleted successfully from sandbox overlay
+                id: 1
+                resource: users
+      tags:
+      - Users
+      operationId: deleteApiV1UsersById
+      x-operation-id-source: derived

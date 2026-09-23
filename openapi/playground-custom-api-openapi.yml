@@ -1,0 +1,173 @@
+openapi: 3.2.0
+info:
+  title: Playground Custom API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Custom
+paths:
+  /api/v1/custom:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                totalCollections: 2
+                collections:
+                - name: products
+                  endpoint: /custom/products
+                  count: 3
+                  lastUpdated: '2026-08-02T23:30:00.000Z'
+                - name: orders
+                  endpoint: /custom/orders
+                  count: 2
+                  lastUpdated: '2026-08-02T23:30:00.000Z'
+      tags:
+      - Custom
+      summary: Get api custom
+      x-summary-source: derived
+      operationId: getApiV1Custom
+      x-operation-id-source: derived
+  /api/v1/custom/seed:
+    post:
+      parameters:
+      - name: template
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: 'Seeded 5 records across custom collections: products, orders.'
+                template: ecommerce
+                collections:
+                - products
+                - orders
+                totalSeeded: 5
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              template: ecommerce
+      tags:
+      - Custom
+      summary: Create api custom seed
+      x-summary-source: derived
+      operationId: postApiV1CustomSeed
+      x-operation-id-source: derived
+  /api/v1/custom/{collection}:
+    get:
+      parameters:
+      - name: collection
+        required: false
+        schema:
+          type: string
+      - name: page
+        required: false
+        schema:
+          type: string
+      - name: limit
+        required: false
+        schema:
+          type: string
+      - name: q
+        required: false
+        schema:
+          type: string
+      - name: _sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                data:
+                - id: local-a1b2c3d4
+                  name: MacBook Pro M3
+                  price: 2499
+                  category: Laptops
+                  createdAt: '2026-08-02T23:30:00.000Z'
+                  _sandbox: created
+                pagination:
+                  page: 1
+                  limit: 10
+                  total: 1
+                  totalPages: 1
+                  hasNextPage: false
+                  hasPrevPage: false
+      tags:
+      - Custom
+      summary: Get api custom by collection
+      x-summary-source: derived
+      operationId: getApiV1CustomByCollection
+      x-operation-id-source: derived
+    post:
+      parameters:
+      - name: collection
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: local-f9e8d7c6-5432-10ab
+                name: Custom Product Item
+                price: 99.99
+                inStock: true
+                createdAt: '2026-08-02T23:30:00.000Z'
+                updatedAt: '2026-08-02T23:30:00.000Z'
+                _sandbox: created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Custom Product Item
+              price: 99.99
+              inStock: true
+      tags:
+      - Custom
+      summary: Create api custom by collection
+      x-summary-source: derived
+      operationId: postApiV1CustomByCollection
+      x-operation-id-source: derived
+  /api/v1/custom/{collection}/{id}:
+    delete:
+      parameters:
+      - name: collection
+        required: false
+        schema:
+          type: string
+      - name: id
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Record 'local-f9e8d7c6' removed from custom collection 'products'
+      tags:
+      - Custom
+      summary: Delete api custom by collection by id
+      x-summary-source: derived
+      operationId: deleteApiV1CustomByCollectionById
+      x-operation-id-source: derived

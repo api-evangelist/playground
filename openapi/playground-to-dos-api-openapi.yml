@@ -1,0 +1,236 @@
+openapi: 3.2.0
+info:
+  title: Playground Todos API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: To Dos
+paths:
+  /api/v1/todos:
+    get:
+      summary: Retrieve a paginated list of todos.
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Full-text search query term across title, etc.
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        required: false
+        description: Filter todos by owner user ID (e.g. user_id=1).
+        schema:
+          type: integer
+      - name: completed
+        in: query
+        required: false
+        description: Filter todos by completion status (true or false).
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number (1-indexed, default 1).
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        description: Number of records per page (default 10, max 200).
+        schema:
+          type: integer
+      - name: _sort
+        in: query
+        required: false
+        description: Field name to sort results by (e.g. title, id, completed).
+        schema:
+          type: string
+      - name: _order
+        in: query
+        required: false
+        description: 'Sort direction: asc (default) or desc.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                data:
+                - id: local-d4e5f6a7-8901-bcde-f123-456789012345
+                  user_id: 1
+                  title: delectus aut autem
+                  completed: true
+                  _sandbox: created
+                - id: 1
+                  user_id: 1
+                  title: delectus aut autem
+                  completed: false
+                pagination:
+                  page: 1
+                  limit: 10
+                  total: 126
+                  totalPages: 13
+                  hasNextPage: true
+                  hasPrevPage: false
+      tags:
+      - To Dos
+      operationId: getApiV1Todos
+      x-operation-id-source: derived
+    post:
+      summary: Create a new session sandbox todo record.
+      parameters:
+      - name: user_id
+        in: body
+        required: false
+        description: Owner user ID.
+        schema:
+          type: integer
+      - name: title
+        in: body
+        required: false
+        description: Todo task title.
+        schema:
+          type: string
+      - name: completed
+        in: body
+        required: false
+        description: Completion status (true / false).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: local-d4e5f6a7-8901-bcde-f123-456789012345
+                user_id: 1
+                title: delectus aut autem
+                completed: false
+                _sandbox: created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              user_id: 1
+              title: delectus aut autem
+              completed: false
+      tags:
+      - To Dos
+      operationId: postApiV1Todos
+      x-operation-id-source: derived
+  /api/v1/todos/{id}:
+    get:
+      summary: Retrieve a single todo item by ID.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Todo ID (e.g. 1 for global todo or local-<uuid> for sandbox todo).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                user_id: 1
+                title: delectus aut autem
+                completed: false
+      tags:
+      - To Dos
+      operationId: getApiV1TodosById
+      x-operation-id-source: derived
+    put:
+      summary: Replace an existing todo record in the session overlay.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Todo ID to update (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                user_id: 1
+                title: delectus aut autem (Updated)
+                completed: true
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              user_id: 1
+              title: delectus aut autem (Updated)
+              completed: true
+      tags:
+      - To Dos
+      operationId: putApiV1TodosById
+      x-operation-id-source: derived
+    patch:
+      summary: Partially update specific fields of a todo record in the session overlay
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Todo ID to patch (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                id: 1
+                user_id: 1
+                title: delectus aut autem
+                completed: true
+                _sandbox: updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              completed: true
+      tags:
+      - To Dos
+      operationId: patchApiV1TodosById
+      x-operation-id-source: derived
+    delete:
+      summary: Remove a todo record from the requesting session view.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Todo ID to delete (e.g. 1 or local-<uuid>).
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example:
+                message: Resource 'todos' with id '1' deleted successfully from sandbox overlay
+                id: 1
+                resource: todos
+      tags:
+      - To Dos
+      operationId: deleteApiV1TodosById
+      x-operation-id-source: derived

@@ -1,0 +1,38 @@
+openapi: 3.2.0
+info:
+  title: Playground Avatars API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Avatars
+paths:
+  /api/v1/avatars/{seed}.svg:
+    get:
+      parameters:
+      - name: seed
+        required: false
+        schema:
+          type: string
+      - name: size
+        required: false
+        schema:
+          type: string
+      - name: rounded
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" width=\"128\" height=\"128\">\n  <defs>\n    <linearGradient id=\"grad-12345\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#059669\" />\n      <stop offset=\"100%\" stop-color=\"#0d9488\" />\n    </linearGradient>\n  </defs>\n  <rect width=\"128\" height=\"128\" rx=\"64\" fill=\"url(#grad-12345)\" />\n  <text x=\"50%\" y=\"54%\" font-family=\"Inter, sans-serif\" font-size=\"54\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\" dominant-baseline=\"middle\">BR</text>\n</svg>"
+      tags:
+      - Avatars
+      summary: Get api avatars {seed} svg
+      x-summary-source: derived
+      operationId: getApiV1Avatars{seed}Svg
+      x-operation-id-source: derived

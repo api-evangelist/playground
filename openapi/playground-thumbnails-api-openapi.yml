@@ -1,0 +1,46 @@
+openapi: 3.2.0
+info:
+  title: Playground Thumbnails API
+  version: 1.0.0
+  description: Zero-config per-identity sandboxed mock REST API with relational filtering, dynamic sorting, and network simulation.
+servers:
+- url: http://playground-api-backend.vercel.app
+  description: Default Server
+tags:
+- name: Thumbnails
+paths:
+  /api/v1/thumbnails/{seed}.svg:
+    get:
+      parameters:
+      - name: seed
+        required: false
+        schema:
+          type: string
+      - name: width
+        required: false
+        schema:
+          type: string
+      - name: height
+        required: false
+        schema:
+          type: string
+      - name: text
+        required: false
+        schema:
+          type: string
+      - name: description
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              example: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 400\" width=\"600\" height=\"400\">\n  <defs>\n    <linearGradient id=\"thumb-grad-54321\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#4f46e5\" />\n      <stop offset=\"100%\" stop-color=\"#7c3aed\" />\n    </linearGradient>\n  </defs>\n  <rect width=\"600\" height=\"400\" fill=\"url(#thumb-grad-54321)\" />\n  <text x=\"50%\" y=\"46%\" font-family=\"Inter, sans-serif\" font-size=\"33\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\" dominant-baseline=\"middle\">Post #1</text>\n</svg>"
+      tags:
+      - Thumbnails
+      summary: Get api thumbnails {seed} svg
+      x-summary-source: derived
+      operationId: getApiV1Thumbnails{seed}Svg
+      x-operation-id-source: derived
