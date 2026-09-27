@@ -7,6 +7,22 @@ description: >-
   signup required.
 url: >-
   https://raw.githubusercontent.com/api-evangelist/playground/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - nileslabs/playground_api
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 created: '2026-09-14'
 modified: '2026-09-14'
 specificationVersion: '0.21'
@@ -212,8 +228,6 @@ apis:
   humanURL: https://playground.nileslabs.com/docs/graphql
   baseURL: https://playground.nileslabs.com/api/v1/graphql
   tags:
-  - To-Dos
-  tags_raw:
   - To Dos
   properties:
   - type: OpenAPI
