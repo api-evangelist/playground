@@ -228,6 +228,8 @@ apis:
   humanURL: https://playground.nileslabs.com/docs/graphql
   baseURL: https://playground.nileslabs.com/api/v1/graphql
   tags:
+  - To-Dos
+  tags_raw:
   - To Dos
   properties:
   - type: OpenAPI
