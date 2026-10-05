@@ -1,0 +1,12 @@
+{
+ "url": "https://playground.nileslabs.com/openapi.json",
+ "requested_url": "https://playground.nileslabs.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 31908,
+ "sha256": "c2cf9a3d2ab752f558aec0ba63090ac244f90ee946887af20b64a7c4d1f88fa6",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.951), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
