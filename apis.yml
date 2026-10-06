@@ -24,7 +24,7 @@ deliveryModel:
   generated: '2026-09-25'
   method: derived
 created: '2026-09-14'
-modified: '2026-09-14'
+modified: '2026-10-06'
 specificationVersion: '0.21'
 tags:
   - Developer Tools
@@ -247,6 +247,8 @@ x-generated:
   confidence: 97
   at: '2026-09-14T09:54:24.885Z'
 common:
+- url: https://playground.nileslabs.com/blog
+  type: Blog
 - type: Website
   url: https://playground.nileslabs.com
 - type: GettingStarted
