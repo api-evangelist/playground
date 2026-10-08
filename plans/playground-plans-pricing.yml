@@ -29,3 +29,16 @@ note: >-
   Playground API is entirely free and open (MIT), with no tiers, no paid plans,
   no signup and no billing. The single Free plan is recorded with its published
   operational limits. There is no enterprise/contact-sales tier.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
