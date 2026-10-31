@@ -66,9 +66,118 @@
 
 A free, zero-configuration, stateful mock REST and GraphQL API sandbox by Nilesh Kumar / Niles Labs. Unlike static mock APIs, it provides stateful per-session virtual mutation overlays where POST/PUT/PATCH/DELETE mutations persist across GET queries within a session, while the global baseline dataset remains read-only. Includes chaos/network simulation, dynamic collections, avatar/thumbnail generators, and simulated JWT auth loops. MIT licensed, no auth or signup required.
 
-- **Provider:** https://playground.nileslabs.com
-- **Documentation:** https://playground.nileslabs.com/docs
-- **Base URL:** https://playground.nileslabs.com/api/v1
-- **GraphQL:** https://playground.nileslabs.com/api/v1/graphql
-- **Source:** https://github.com/nileslabs/playground_api
-- **License:** MIT
+**Areas:** Developer Tools · Testing · Mock API · api-sandbox · REST · GraphQL · E2E Testing
+
+## Playground API — Free Stateful Mock REST & GraphQL Service on APIs.io
+
+Everything profiled for Playground API — Free Stateful Mock REST & GraphQL Service is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/playground/](https://apis.io/providers/playground/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Playground GraphQL API](https://apis.io/apis/playground/playground-graphql-api/) — GraphQL gateway providing stateful mock query and mutation access to the same dataset, with an interactive explorer.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Auth API](https://apis.io/apis/playground/playground-auth-api/) — The Auth API from Playground API — Free Stateful Mock REST & GraphQL Service — 4 operation(s) for auth.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Avatars API](https://apis.io/apis/playground/playground-avatars-api/) — The Avatars API from Playground API — Free Stateful Mock REST & GraphQL Service — 1 operation(s) for avatars.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Comments API](https://apis.io/apis/playground/playground-comments-api/) — The Comments API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for comments.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Custom API](https://apis.io/apis/playground/playground-custom-api/) — The Custom API from Playground API — Free Stateful Mock REST & GraphQL Service — 4 operation(s) for custom.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Posts API](https://apis.io/apis/playground/playground-posts-api/) — The Posts API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for posts.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Session API](https://apis.io/apis/playground/playground-session-api/) — The Session API from Playground API — Free Stateful Mock REST & GraphQL Service — 3 operation(s) for session.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Thumbnails API](https://apis.io/apis/playground/playground-thumbnails-api/) — The Thumbnails API from Playground API — Free Stateful Mock REST & GraphQL Service — 1 operation(s) for thumbnails.
+- [Playground API — Free Stateful Mock REST & GraphQL Service Users API](https://apis.io/apis/playground/playground-users-api/) — The Users API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for users.
+- [Playground API — Free Stateful Mock REST & GraphQL Service To Dos API](https://apis.io/apis/playground/playground-to-dos-api/) — The To Dos API from Playground API — Free Stateful Mock REST & GraphQL Service — 2 operation(s) for to dos.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [playground-mcp.yml](https://apis.io/servers/playground/playground-mcp-yml/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Playground Openapi Overlay](https://apis.io/overlays/playground/playground-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Playground Authentication](https://apis.io/security/playground/playground-authentication/)
+- [Playground Domain Security](https://apis.io/security/playground/playground-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Playground Plans Pricing](https://apis.io/plans/playground/playground-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Playground Rate Limits](https://apis.io/rate-limits/playground/playground-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://playground.nileslabs.com)
+- [Getting started](https://playground.nileslabs.com/docs/quickstart)
+- [Blog](https://playground.nileslabs.com/blog)
+- [GitHub](https://github.com/nileslabs)
+
+## API Evangelist rating
+
+**Kin Score 32.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 44.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 49.4 |
+| Access clarity | 21.1 |
+
+**Agent readiness 26.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/playground/](https://apis.io/providers/playground/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Playground API — Free Stateful Mock REST & GraphQL Service: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/playground/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
